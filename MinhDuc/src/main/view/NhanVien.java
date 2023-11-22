@@ -5,12 +5,20 @@
  */
 package main.view;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import main.model.nhanVien;
+import main.service.nhanVien_Service;
+
 /**
  *
  * @author HP
  */
 public class NhanVien extends javax.swing.JFrame {
 
+    DefaultTableModel mol = new DefaultTableModel();
+    nhanVien_Service service = new nhanVien_Service();
+    private int index = -1;
     /**
      * Creates new form NhanVien
      */
@@ -18,6 +26,7 @@ public class NhanVien extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setSize(1000, 650);
+        this.fillTable(service.getAll());
     }
 
     /**
@@ -58,7 +67,7 @@ public class NhanVien extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbl_listNV = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -248,7 +257,7 @@ public class NhanVien extends javax.swing.JFrame {
         jLabel24.setForeground(new java.awt.Color(255, 51, 51));
         jLabel24.setText("Danh sách nhân viên ");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_listNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null},
@@ -259,7 +268,7 @@ public class NhanVien extends javax.swing.JFrame {
                 "Mã NV", "Tên NV", "Ngày sinh", "Ngày vào làm", "Địa chỉ", "CCCD", "Sex", "Email", "Phone", "Trạng thái", "Image"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tbl_listNV);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -562,6 +571,15 @@ public class NhanVien extends javax.swing.JFrame {
             }
         });
     }
+    void fillTable(List<nhanVien> list) {
+        mol = (DefaultTableModel) tbl_listNV.getModel();
+        mol.setRowCount(0);
+        for (nhanVien x : list) {
+            mol.addRow(new Object[]{x.getId_NhanVien(), x.getMaNV(), x.getHoTen(), x.getNgaySinh(),
+                x.getDiaChi(), x.getCCCD(), x.isGioiTinh() ? "Nữ" : "Nam",
+                x.isTrangThai() ? "Đã nghỉ làm" : "Đang đi làm", x.getSdt(), x.isVaiTro() ? "Nhân Viên" : "Quản lý"});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hoadon;
@@ -605,7 +623,6 @@ public class NhanVien extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -616,5 +633,6 @@ public class NhanVien extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JPanel pnl_menu4;
     private javax.swing.JPanel pnl_view;
+    private javax.swing.JTable tbl_listNV;
     // End of variables declaration//GEN-END:variables
 }
